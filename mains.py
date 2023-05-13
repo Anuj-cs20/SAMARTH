@@ -1,3 +1,5 @@
+# Ignore this , This code is not part of SAMARTH but rather a test code !!
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
