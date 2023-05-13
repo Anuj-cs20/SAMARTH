@@ -1,3 +1,6 @@
+'''------------------------------ S A M A R T H ---------------------------------------------'''
+'''---------Smart A.I with Multi-functional Automation and Robust Task Handling--------------'''
+
 # Set OPENAI_API_KEY to your API key, and then run this from a terminal.
 
 from playwright.sync_api import sync_playwright
