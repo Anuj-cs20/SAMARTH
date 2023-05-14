@@ -1,20 +1,31 @@
+import os
 import speech_recognition as sr
+import subprocess
+PROMPT = ""
 
-# create an instance of the recognizer
+# set up Google Cloud Speech API
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = r"samarth-warpspeed-8503d69efe59.json"
 r = sr.Recognizer()
 
-# use the default microphone as the audio source
+# set up audio source
 with sr.Microphone() as source:
-    print("Speak something...")
-    # listen for the audio and store it in a variable
+    print("Hi! I am SAMARTH")
+    print("How can I assist you today...")
     audio = r.listen(source)
 
+# recognize speech using Google Cloud Speech API
 try:
-    # recognize speech using Google Speech Recognition
-    text = r.recognize_google(audio)
-    print("You said: " + text)
+    text = r.recognize_google_cloud(audio)
+    # print(text)
+    if "assistant" in text.lower():
+        text = text.lower().split("assistant", 1)[-1].strip()
+        PROMT = text
+        print("You said: " + text)
+        subprocess.Popen(f"python3.10 main.py {PROMT}", shell=True)
+        # os.system('python3.10 test.py')
+        # exec(open('test.py').read())
 except sr.UnknownValueError:
-    print("Google Speech Recognition could not understand audio")
+    print("Google Cloud Speech API could not understand audio")
 except sr.RequestError as e:
     print(
-        "Could not request results from Google Speech Recognition service; {0}".format(e))
+        "Could not request results from Google Cloud Speech API service; {0}".format(e))
