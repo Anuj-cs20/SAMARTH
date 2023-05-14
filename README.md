@@ -19,22 +19,22 @@
  Run these two commands in  your terminal
  <br>
  2. `pip install playwright`
- <br> <br>
+ <br>
  3. `playwright install`
  ### Speech Recognition
  Library for performing speech recognition, with support for several engines and APIs, online and offline.
  
- 3. Run `pip install SpeechRecognition` in terminal.
+ 4. Run `pip install SpeechRecognition` in terminal.
  
  ### Open API Key
  You are required to have a Open API Key . You can find yours at `https://platform.openai.com/account/api-keys`.
  
-  4. Create a file name `openai_api_key.txt` in the same directory as our main python file and paste your Open API Key over there.
+  5. Create a file name `openai_api_key.txt` in the same directory as our main python file and paste your Open API Key over there.
  
  ### Execution
  We are now all set with libraries and API Key. Now we proceed on to execute our `main.py`.
  
- 5. Run `python main.py` in your terminal from the file directory.
+ 6. Run `python main.py` in your terminal from the file directory.
  
  Give the Objective/Task you want SAMARTH to do, and sit back and relax . Your task will be done automatically without any clicks, unless you have to give any login credentials to SAMARTH to proceed carrying out the task.
  
