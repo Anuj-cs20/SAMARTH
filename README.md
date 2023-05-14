@@ -33,15 +33,18 @@
  ### Subprocess
  7. Run `pip install subprocess` in terminal.
  
+ ### Google Cloud JSON
+ 8. Create a file name `.json` in the same directory as our main python file and paste your json file name over there.
+ 
  ### Open API Key
  You are required to have a Open API Key . You can find yours at `https://platform.openai.com/account/api-keys`.
  
-  5. Create a file name `openai_api_key.txt` in the same directory as our main python file and paste your Open API Key over there.
+  9. Create a file name `openai_api_key.txt` in the same directory as our main python file and paste your Open API Key over there.
  
  ### Execution
  We are now all set with libraries and API Key. Now we proceed on to execute our `speech.py`.
  
- 6. Run `python speech.py` in your terminal from the file directory.
+ 10. Run `python speech.py` in your terminal from the file directory.
  
  Give the Objective/Task you want SAMARTH to do, and sit back and relax . Your task will be done automatically without any clicks, unless you have to give any login credentials to SAMARTH to proceed carrying out the task.
  
