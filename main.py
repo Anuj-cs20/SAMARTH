@@ -1,13 +1,14 @@
 '''------------------------------ S A M A R T H ---------------------------------------------'''
 '''---------Smart A.I with Multi-functional Automation and Robust Task Handling--------------'''
-
-# Set OPENAI_API_KEY to your API key, and then run this from a terminal.
-
+# api key in openai_api_key.txt
+import sys
 from playwright.sync_api import sync_playwright
 import time
 from sys import argv, exit, platform
 import openai
 import os
+import speech_recognition as sr
+
 
 quiet = False
 if len(argv) >= 2:
@@ -31,7 +32,10 @@ You can issue these commands:
 	CLICK X - click on a given element. You can only click on links, buttons, and inputs!
 	TYPE X "TEXT" - type the specified text into the input with id X
 	TYPESUBMIT X "TEXT" - same as TYPE above, except then it presses ENTER to submit the form
-
+    STOP - stop after completing the task
+    
+Only one command per each call should be issued
+    
 The format of the browser content is highly simplified; all formatting elements are stripped.
 Interactive elements such as links, inputs, buttons are represented like this:
 
@@ -174,7 +178,8 @@ class Crawler:
         self.page.set_viewport_size({"width": 1280, "height": 1080})
 
     def go_to_page(self, url):
-        self.page.goto(url=url if "://" in url else "http://" + url)
+        full_url = url if "://" in url else "http://" + url
+        self.page.goto(url=full_url)
         self.client = self.page.context.new_cdp_session(self.page)
         self.page_element_buffer = {}
 
@@ -274,13 +279,6 @@ class Crawler:
         text_value_index = text_value["index"]
         text_value_values = text_value["value"]
 
-        if "textareaValue" in nodes:
-            textarea_value = nodes["textareaValue"]
-            textarea_value_index = textarea_value["index"]
-            textarea_value_values = textarea_value["value"]
-        else:
-            textarea_value = None
-
         input_value = nodes["inputValue"]
         input_value_index = input_value["index"]
         input_value_values = input_value["value"]
@@ -371,18 +369,6 @@ class Crawler:
             is_ancestor_of_button, button_id = add_to_hash_tree(
                 button_ancestry, "button", index, node_name, node_parent
             )
-
-            textarea_values = find_attributes(
-                attributes[index], ["placeholder", "aria-label", "title"]
-            )
-            if "placeholder" in textarea_values:
-                text = textarea_values["placeholder"]
-            elif "aria-label" in textarea_values:
-                text = textarea_values["aria-label"]
-            elif "title" in textarea_values:
-                text = textarea_values["title"]
-            else:
-                text = ""
 
             try:
                 cursor = layout_node_index.index(
@@ -572,10 +558,7 @@ if (
     openai.api_key = os.environ.get("OPENAI_API_KEY")
 
     def print_help():
-        print(
-            "(g) to visit url\n(u) scroll up\n(d) scroll down\n(c) to click\n(t) to type\n" +
-            "(h) to view commands again\n(r/enter) to run suggested command\n(o) change objective"
-        )
+        print("")
 
     def get_gpt_command(objective, url, previous_command, browser_content):
         prompt = prompt_template
@@ -585,6 +568,7 @@ if (
         prompt = prompt.replace("$browser_content", browser_content[:4500])
         response = openai.Completion.create(
             model="text-davinci-002", prompt=prompt, temperature=0.5, best_of=10, n=3, max_tokens=50)
+        print(response)
         return response.choices[0].text
 
     def run_cmd(cmd):
@@ -612,15 +596,39 @@ if (
 
         time.sleep(2)
 
-    objective = "Make a reservation for 2 at 7pm at bistro vida in menlo park"
-    print("\nWelcome to natbot! What is your objective?")
-    i = input()
+    # create an instance of the recognizer
+    # set up Google Cloud Speech API
+    # r = sr.Recognizer()
+    # use the default microphone as the audio source
+    # with sr.Microphone() as source:
+    #     print("Hi! I am SAMARTH")
+    #     print("How can I assist you today...")
+    #     # listen for the audio and store it in a variable
+    #     audio = r.listen(source)
+    # try:
+    #     # recognize speech using Google Speech Recognition
+    #     text = r.recognize_google_cloud(audio)
+    #     print("You said: " + text)
+    #     if len(text) > 0:
+    #         objective = text
+    # except sr.UnknownValueError:
+    #     print("Speech Recognition could not understand audio")
+    #     exit(0)
+    # except sr.RequestError as e:
+    #     print(
+    #         "Could not request results from Speech Recognition service; {0}".format(e))
+    #     exit(0)
+    n = len(sys.argv)
+    text = ""
+    for i in range(1, n):
+        text += sys.argv[i]
+    i = text
     if len(i) > 0:
         objective = i
 
     gpt_cmd = ""
     prev_cmd = ""
-    _crawler.go_to_page("google.com")
+    _crawler.go_to_page("duckduckgo.com")
     try:
         while True:
             browser_content = "\n".join(_crawler.crawl())
@@ -637,31 +645,33 @@ if (
             if len(gpt_cmd) > 0:
                 print("Suggested command: " + gpt_cmd)
 
-            command = input()
-            if command == "r" or command == "":
+            # command = input()
+            if "TYPESUBMIT" in gpt_cmd:
                 run_cmd(gpt_cmd)
-            elif command == "g":
-                url = input("URL:")
-                _crawler.go_to_page(url)
-            elif command == "u":
+            elif "SCROLL UP" in gpt_cmd:
                 _crawler.scroll("up")
                 time.sleep(1)
-            elif command == "d":
+            elif "SCROLL DOWN" in gpt_cmd:
                 _crawler.scroll("down")
                 time.sleep(1)
-            elif command == "c":
-                id = input("id:")
+            elif "CLICK" in gpt_cmd:
+                id = int(gpt_cmd.split("CLICK ")[1])
                 _crawler.click(id)
-                time.sleep(1)
-            elif command == "t":
-                id = input("id:")
-                text = input("text:")
+                time.sleep(10)
+            elif "TEXT" in gpt_cmd:
+                List = gpt_cmd.split('TYPE ')[1]
+                List = List.split('\"')
+                id = int(List[0].split(' ')[0])
+                text = List[1]
                 _crawler.type(id, text)
-                time.sleep(1)
-            elif command == "o":
-                objective = input("Objective:")
+                time.sleep(10)
+            elif "STOP" in gpt_cmd:
+                time.sleep(15)
+                exit(0)
             else:
                 print_help()
+                exit(0)
     except KeyboardInterrupt:
         print("\n[!] Ctrl+C detected, exiting gracefully.")
         exit(0)
+
