@@ -19,6 +19,7 @@
  Run these two commands in  your terminal
  <br>
  2. `pip install playwright`
+ <br>
  3. `playwright install`
  ### Speech Recognition
  Library for performing speech recognition, with support for several engines and APIs, online and offline.
