@@ -43,6 +43,4 @@
  `Python`
  `GPT-3`
  `Replit`
- 
- # Motivation !
- The initial idea was to create a fully automatic A.I tool to help find and book cabs efficiently.
+ `Speech to Text service`
