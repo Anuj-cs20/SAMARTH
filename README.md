@@ -25,6 +25,8 @@
  Library for performing speech recognition, with support for several engines and APIs, online and offline.
  
  4. Run `pip install SpeechRecognition` in terminal.
+ ### PyAudio
+ 5.Run `pip install pyaudio` in terminal 
  
  ### Open API Key
  You are required to have a Open API Key . You can find yours at `https://platform.openai.com/account/api-keys`.
