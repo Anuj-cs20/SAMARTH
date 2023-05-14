@@ -21,8 +21,8 @@ try:
         text = text.lower().split("assistant", 1)[-1].strip()
         PROMT = text
         print("You said: " + text)
-        subprocess.Popen(f"python3.10 main.py {PROMT}", shell=True)
-        # os.system('python3.10 test.py')
+        subprocess.Popen(f"python main.py {PROMT}", shell=True)
+        # os.system('python3 test.py')
         # exec(open('test.py').read())
 except sr.UnknownValueError:
     print("Google Cloud Speech API could not understand audio")
