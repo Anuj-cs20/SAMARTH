@@ -26,7 +26,12 @@
  
  4. Run `pip install SpeechRecognition` in terminal.
  ### PyAudio
- 5.Run `pip install pyaudio` in terminal 
+ 5.Run `pip install pyaudio` in terminal
+ 
+ ### Google Cloud Speech to Text API
+ 6. Run `pip install google-cloud-speech` in terminal.
+ ### Subprocess
+ 7. Run `pip install subprocess` in terminal.
  
  ### Open API Key
  You are required to have a Open API Key . You can find yours at `https://platform.openai.com/account/api-keys`.
