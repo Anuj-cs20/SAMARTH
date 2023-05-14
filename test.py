@@ -597,6 +597,7 @@ if (
 
     # use the default microphone as the audio source
     with sr.Microphone() as source:
+	print("\nHi! SAMARTH")
         print("Speak something...")
         # listen for the audio and store it in a variable
         audio = r.listen(source)
@@ -604,7 +605,9 @@ if (
     try:
         # recognize speech using Google Speech Recognition
         text = r.recognize_google(audio)
-        print("You said: " + text)
+        print("You said: " + text) 
+	if len(text) > 0:
+	   objective = text
     except sr.UnknownValueError:
         print("Google Speech Recognition could not understand audio")
         exit(0)
@@ -613,11 +616,7 @@ if (
             "Could not request results from Google Speech Recognition service; {0}".format(e))
         exit(0)
 
-    objective = text
-    print("\nHi! SAMARTH")
-    i = input()
-    if len(i) > 0:
-        objective = i
+
 
     gpt_cmd = ""
     prev_cmd = ""
