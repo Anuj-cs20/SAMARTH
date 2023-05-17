@@ -8,7 +8,8 @@
  
  This is the submission of team Code Crafters for the Warpspeed Hackathon held on 13th and 14th May 2023 at Bangalore.
 
-[<img src="https://github.com/Anuj-cs20/SAMARTH/assets/77829961/fa324f94-465e-47c6-ab70-18d451cd7a9c" width="50%">](https://www.youtube.com/watch?v=kUSF4WNfOfk "SAMARTH")    
+### SAMARTH Working Video
+https://www.youtube.com/watch?v=kUSF4WNfOfk
 
  # Steps to Run :) 
  ### OpenAI
